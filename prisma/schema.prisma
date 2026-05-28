@@ -13,9 +13,8 @@ model Team {
   city               String
   conference         String
   division           String
-  fullName           String
   updatedAt          DateTime     @default(now())
-
+  fullName           String
   currentDraftPicks  DraftPick[]  @relation("CurrentTeamPicks")
   originalDraftPicks DraftPick[]  @relation("OriginalTeamPicks")
   players            Player[]
@@ -27,15 +26,14 @@ model Player {
   id              Int               @id @default(autoincrement())
   firstName       String
   lastName        String
-  position        String
+  position        String?
   height          String?
   weight          String?
   teamId          Int?
   updatedAt       DateTime          @default(now())
-
-  team            Team?             @relation(fields: [teamId], references: [id])
   contracts       Contract[]
   contractHistory ContractHistory[]
+  team            Team?             @relation(fields: [teamId], references: [id])
   tradeAssets     TradeAsset[]
 }
 
@@ -51,7 +49,6 @@ model Contract {
   isActive        Boolean? @default(true)
   updatedAt       DateTime @default(now())
   playerId        Int
-
   player          Player   @relation(fields: [playerId], references: [id])
 }
 
@@ -66,7 +63,6 @@ model ContractHistory {
   terminationReason String?
   createdAt         DateTime @default(now())
   playerId          Int
-
   player            Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
 }
 
@@ -79,7 +75,6 @@ model DraftPick {
   originalTeamId    Int
   currentTeamId     Int
   updatedAt         DateTime     @default(now())
-
   currentTeam       Team         @relation("CurrentTeamPicks", fields: [currentTeamId], references: [id], map: "DraftPick_currentTeam_fkey")
   originalTeam      Team         @relation("OriginalTeamPicks", fields: [originalTeamId], references: [id], map: "DraftPick_originalTeam_fkey")
   tradeAssets       TradeAsset[]
@@ -101,12 +96,11 @@ model TradeAsset {
   playerId           Int?
   draftPickId        Int?
   cashConsiderations Float?     @default(0)
-
-  trade              Trade      @relation(fields: [tradeId], references: [id], onDelete: Cascade)
-  fromTeam           Team       @relation("SentAssets", fields: [fromTeamId], references: [id], map: "TradeAsset_fromTeam_fkey")
-  toTeam             Team       @relation("ReceivedAssets", fields: [toTeamId], references: [id], map: "TradeAsset_toTeam_fkey")
-  player             Player?    @relation(fields: [playerId], references: [id])
   draftPick          DraftPick? @relation(fields: [draftPickId], references: [id])
+  fromTeam           Team       @relation("SentAssets", fields: [fromTeamId], references: [id], map: "TradeAsset_fromTeam_fkey")
+  player             Player?    @relation(fields: [playerId], references: [id])
+  toTeam             Team       @relation("ReceivedAssets", fields: [toTeamId], references: [id], map: "TradeAsset_toTeam_fkey")
+  trade              Trade      @relation(fields: [tradeId], references: [id], onDelete: Cascade)
 }
 
 model NewsItem {
