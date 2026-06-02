@@ -7,7 +7,7 @@ datasource db {
 }
 
 model Team {
-  id                 Int          @id @default(autoincrement())
+  id                 Int          @id
   name               String
   abbreviation       String
   city               String
@@ -15,15 +15,13 @@ model Team {
   division           String
   updatedAt          DateTime     @default(now())
   fullName           String
-  currentDraftPicks  DraftPick[]  @relation("CurrentTeamPicks")
-  originalDraftPicks DraftPick[]  @relation("OriginalTeamPicks")
   players            Player[]
-  sentAssets         TradeAsset[] @relation("SentAssets")
-  receivedAssets     TradeAsset[] @relation("ReceivedAssets")
+  homeGames     Game[] @relation("HomeGames")
+  visitorGames  Game[] @relation("VisitorGames")
 }
 
 model Player {
-  id              Int               @id @default(autoincrement())
+  id              Int               @id
   firstName       String
   lastName        String
   position        String?
@@ -31,83 +29,40 @@ model Player {
   weight          String?
   teamId          Int?
   updatedAt       DateTime          @default(now())
-  contracts       Contract[]
-  contractHistory ContractHistory[]
   team            Team?             @relation(fields: [teamId], references: [id])
-  tradeAssets     TradeAsset[]
 }
 
-model Contract {
-  id              Int      @id @default(autoincrement())
-  contractType    String?
-  contractStatus  String?
-  lengthYears     Int?
-  totalValue      Float?
-  averageSalary   Float?
-  freeAgentYear   Int?
-  freeAgentStatus String?
-  isActive        Boolean? @default(true)
-  updatedAt       DateTime @default(now())
-  playerId        Int
-  player          Player   @relation(fields: [playerId], references: [id])
-}
-
-model ContractHistory {
-  id                Int      @id @default(autoincrement())
-  contractType      String?
-  lengthYears       Int?
-  totalValue        Float?
-  averageSalary     Float?
-  freeAgentYear     Int?
-  freeAgentStatus   String?
-  terminationReason String?
-  createdAt         DateTime @default(now())
-  playerId          Int
-  player            Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
-}
-
-model DraftPick {
-  id                Int          @id @default(autoincrement())
-  year              Int
-  round             Int
-  isProtected       Boolean?     @default(false)
-  protectionDetails String?
-  originalTeamId    Int
-  currentTeamId     Int
-  updatedAt         DateTime     @default(now())
-  currentTeam       Team         @relation("CurrentTeamPicks", fields: [currentTeamId], references: [id], map: "DraftPick_currentTeam_fkey")
-  originalTeam      Team         @relation("OriginalTeamPicks", fields: [originalTeamId], references: [id], map: "DraftPick_originalTeam_fkey")
-  tradeAssets       TradeAsset[]
-}
-
-model Trade {
-  id          Int          @id @default(autoincrement())
-  tradeDate   DateTime     @default(now())
-  status      String?      @default("Pending")
-  details     String?
-  tradeAssets TradeAsset[]
-}
-
-model TradeAsset {
-  id                 Int        @id @default(autoincrement())
-  tradeId            Int
-  fromTeamId         Int
-  toTeamId           Int
-  playerId           Int?
-  draftPickId        Int?
-  cashConsiderations Float?     @default(0)
-  draftPick          DraftPick? @relation(fields: [draftPickId], references: [id])
-  fromTeam           Team       @relation("SentAssets", fields: [fromTeamId], references: [id], map: "TradeAsset_fromTeam_fkey")
-  player             Player?    @relation(fields: [playerId], references: [id])
-  toTeam             Team       @relation("ReceivedAssets", fields: [toTeamId], references: [id], map: "TradeAsset_toTeam_fkey")
-  trade              Trade      @relation(fields: [tradeId], references: [id], onDelete: Cascade)
-}
-
-model NewsItem {
-  id          String    @id @default(dbgenerated("(gen_random_uuid())::text"))
-  title       String
-  link        String    @unique
-  source      String
-  publishedAt DateTime?
-  createdAt   DateTime  @default(now())
+model Game {
+  id                   Int      @id
+  date                 DateTime
+  datetime             DateTime?
+  season               Int
+  status               String?
+  time                 String?
+  postseason           Boolean
+  postponed            Boolean?
+  homeTeamScore        Int?
+  visitorTeamScore     Int?
+  homeQ1               Int?
+  homeQ2               Int?
+  homeQ3               Int?
+  homeQ4               Int?
+  homeOt1              Int?
+  homeOt2              Int?
+  homeOt3              Int?
+  homeTimeoutsRemaining Int?
+  homeInBonus          Boolean?
+  visitorQ1            Int?
+  visitorQ2            Int?
+  visitorQ3            Int?
+  visitorQ4            Int?
+  visitorOt1           Int?
+  visitorOt2           Int?
+  visitorOt3           Int?
+  visitorTimeoutsRemaining Int?
+  visitorInBonus       Boolean?
+  homeTeamId           Int
+  visitorTeamId        Int
+  homeTeam             Team     @relation("HomeGames", fields: [homeTeamId], references: [id])
+  visitorTeam          Team     @relation("VisitorGames", fields: [visitorTeamId], references: [id])
 }
