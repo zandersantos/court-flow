@@ -15,23 +15,23 @@ export default async function PlayoffsPage() {
   })
 
   return (
-    <main>
-      <h1>2025-26 NBA Playoffs</h1>
-      <div>
+    <main className="p-8">
+      <h1 className="text-2xl font-bold mb-6">2025-26 NBA Playoffs</h1>
+      <div className="flex flex-col gap-4">
         {games.map((game) => (
-          <div key={game.id} >
-            <div>
+          <div key={game.id} className="border p-4 rounded-lg">
+            <div className="text-sm text-gray-500 mb-2">
               {new Date(game.date).toLocaleDateString()} — {game.status}
             </div>
-            <div>
-              <span>{game.homeTeam.fullName}</span>
-              <span>
+            <div className="flex items-center justify-between">
+              <span className="font-medium">{game.homeTeam.fullName}</span>
+              <span className="text-xl font-bold">
                 {game.homeTeamScore ?? "-"}
               </span>
             </div>
-            <div>
-              <span>{game.visitorTeam.fullName}</span>
-              <span>
+            <div className="flex items-center justify-between">
+              <span className="font-medium">{game.visitorTeam.fullName}</span>
+              <span className="text-xl font-bold">
                 {game.visitorTeamScore ?? "-"}
               </span>
             </div>
