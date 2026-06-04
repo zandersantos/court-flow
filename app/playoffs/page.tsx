@@ -10,7 +10,10 @@ export default async function PlayoffsPage() {
   const games = await prisma.game.findMany({
     where: {
       postseason: true,
-      season: 2025
+      season: 2025,
+      datetime: {
+        lt: new Date(),
+      },
     },
     orderBy: {
       date: "asc"
@@ -56,10 +59,40 @@ export default async function PlayoffsPage() {
       seriesStatus = `${leadingTeam} lead ${series.winsB}-${series.winsA}`
     }
 
+    let seriesWinnerText: string | null = null
+
+    if (
+      game.homeTeamScore !== null &&
+      game.visitorTeamScore !== null
+    ) {
+      const winnerId =
+        game.homeTeamScore > game.visitorTeamScore
+          ? game.homeTeamId
+          : game.visitorTeamId
+
+      const nextWinsA = winnerId === teamA ? series.winsA + 1 : series.winsA
+      const nextWinsB = winnerId === teamB ? series.winsB + 1 : series.winsB
+
+      if (nextWinsA === 4 || nextWinsB === 4) {
+        const winnerTeam =
+          winnerId === game.homeTeamId
+            ? game.homeTeam.fullName
+            : game.visitorTeam.fullName
+
+        const finalScore =
+          nextWinsA === 4
+            ? `${nextWinsA}-${nextWinsB}`
+            : `${nextWinsB}-${nextWinsA}`
+
+        seriesWinnerText = `${winnerTeam} win the series ${finalScore}`
+      }
+    }
+
     const gameWithSeries = {
       ...game,
       gameNumber: series.gameNumber,
       seriesStatus,
+      seriesWinnerText
     }
 
     if (
@@ -117,6 +150,11 @@ export default async function PlayoffsPage() {
                 {game.visitorTeamScore ?? "-"}
               </span>
             </div>
+            {game.seriesWinnerText && (
+              <div className="text-sm font-bold text-green-600 mb-2">
+                !!! {game.seriesWinnerText}
+              </div>
+            )}
           </div>
         ))}
       </div>
