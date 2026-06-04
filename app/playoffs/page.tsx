@@ -36,10 +36,30 @@ export default async function PlayoffsPage() {
       gameNumber: 1,
     }
 
+    let seriesStatus = ""
+
+    if (series.winsA === series.winsB) {
+      seriesStatus = `Series tied ${series.winsA}-${series.winsB}`
+    } else if (series.winsA > series.winsB) {
+      const leadingTeam =
+        teamA === game.homeTeamId
+          ? game.homeTeam.name
+          : game.visitorTeam.name
+
+      seriesStatus = `${leadingTeam} lead ${series.winsA}-${series.winsB}`
+    } else {
+      const leadingTeam =
+        teamB === game.homeTeamId
+          ? game.homeTeam.name
+          : game.visitorTeam.name
+
+      seriesStatus = `${leadingTeam} lead ${series.winsB}-${series.winsA}`
+    }
+
     const gameWithSeries = {
       ...game,
       gameNumber: series.gameNumber,
-      seriesScore: `${series.winsA}-${series.winsB}`,
+      seriesStatus,
     }
 
     if (
@@ -78,7 +98,7 @@ export default async function PlayoffsPage() {
             </div>
 
             <div className="text-sm font-medium mb-2">
-              Game {game.gameNumber}: Series {game.seriesScore}
+              Game {game.gameNumber}: {game.seriesStatus}
             </div>
 
             <div className="flex items-center justify-between">
