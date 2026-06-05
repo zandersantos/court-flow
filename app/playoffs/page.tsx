@@ -1,3 +1,4 @@
+import CompleteRefreshButton from "@/components/ui/CompleteRefreshButton"
 import prisma from "@/lib/prisma"
 
 type SeriesData = {
@@ -120,6 +121,7 @@ export default async function PlayoffsPage() {
 
   return (
     <main className="p-8">
+      <CompleteRefreshButton />
       <h1 className="text-2xl font-bold mb-6">
         2025-26 NBA Playoffs
       </h1>
