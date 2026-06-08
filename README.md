@@ -1,4 +1,4 @@
-# CourtFlow - NBA Off-Season Tracker
+# CourtFlow - NBA Tracker
 
 **Author:** Zander Santos
 **Start Date:** May 27th, 2026
@@ -14,14 +14,18 @@
 - Database Design
 - Getting started
 - Project structure
-- Future Improvements
+- Roadmap
 
 ---
 
 ## Overview
-CourtFlow is a modern NBA off-season dashboard focused on player movement, trades, contracts, free agency, and draft assets. The application provides a centralized platform for tracking roster changes and league activity during the NBA off-season.
+CourtFlow is a real-time NBA dashboard that currently tracks the 2025-26 NBA Finals and Playoffs. The app displays live game scores, quarter-by-quarter breakdowns, and full playoff results for the current postseason.
 
-The project is designed as a full-stack learning project using Next.js, TypeScript, PostgreSQL, and Prisma while exploring scalable application architecture, relational database design, API integration, and modern UI development.
+### Current Phase: Finals & Playoffs Tracker
+CourtFlow currently displays the ongoing NBA Finals with a live score that refreshes on demand, alongside a full playoff bracket results page showing all postseason games.
+
+### Next Phase: Full Season Tracker
+After the Finals, CourtFlow will transition into a full regular season and playoff tracker. The homepage will display all games scheduled for the current day or the next day, and the playoffs page will expand to show all games for the full season. This will be built out for the 2025-26 season first, then maintained and updated for the 2026-27 season with up-to-date live data.
 
 ---
 
@@ -30,7 +34,7 @@ The project is designed as a full-stack learning project using Next.js, TypeScri
 - Live Site: TBD
 - Screenshot: TBD
 
---
+---
 
 ## Tech Stack Used
 
@@ -44,42 +48,26 @@ Tooling: npm, Git & GitHub, Vercel
 ---
 
 ## Features
-Team Dashboard
-- View all NBA teams
-- Browse active rosters
-- View conference and division information
 
-Player Tracking
-- Track player movement between teams
-- View player profile information
-- Track active contracts and contract history
+### Finals Tracker
+- Live score display for the current NBA Finals game
+- Quarter-by-quarter score breakdown
+- Overtime tracking
+- On-demand score refresh
 
-Trade Tracking
-- Display completed and pending trades
-- Track trade assets between teams
-- Support multi-asset trades involving players, draft picks, and cash considerations
-
-Contract Management
-- View active player contracts
-- Track free agency status
-- Store historical contract information
-
-Draft Pick Tracking
-- Track original and current ownership of draft picks
-- Support protected draft pick information
-
-News Feed
-- Aggregate NBA off-season news
-- Display recent transactions and updates
-- Store and manage external news articles
-
+### Playoffs Tracker
+- Full list of 2025-26 playoff games and results
+- Game status, scores, and team information
 ---
 
 ## Database Design
-The application uses a relational PostgreSQL database to manage team rosters, player movement, contracts, trades, and draft assets during the NBA off-season.
+The application uses a relational PostgreSQL database to manage teams, players, and games.
 
 Prisma ORM is used to manage relationships and database interactions.
 
+- `Team` — All 30 NBA teams with conference and division info
+- `Player` — Player roster information linked to teams
+- `Game` — Playoff and Finals game data including scores, quarter breakdowns, and game status
 
 ## Getting Started
 
@@ -105,3 +93,13 @@ npm run dev
 /components/ - Reusable UI components
 /lib/ - Utility functions and database clients
 /services/ - External API and business logic
+
+---
+
+## Roadmap
+
+- [x] NBA Finals live score tracker
+- [x] Full playoffs results page
+- [ ] Full regular season game tracker (today's games / tomorrow's games)
+- [ ] Season-wide game history and results
+- [ ] 2026-27 season support with live data
