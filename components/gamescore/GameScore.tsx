@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma"
 import Image from "next/image"
+import TodayRefreshButton from "../ui/TodayRefreshButton"
 
 export default async function GameScore() {
   const now = new Date()
@@ -138,6 +139,7 @@ export default async function GameScore() {
             })
           }
         </p>
+        <TodayRefreshButton />
       </div>
     </div>
   )
