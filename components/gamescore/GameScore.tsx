@@ -28,6 +28,9 @@ export default async function GameScore() {
     )
   }
 
+  const isLive = game.status && game.status !== "Final" && !game.status.includes(":")
+  const isFinal = game.status === "Final"
+
   return (
     <div className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-black">
       <div className="absolute inset-0 z-0">
@@ -45,6 +48,30 @@ export default async function GameScore() {
           <p className="text-4xl text-yellow-400 uppercase tracking-[0.3em] font-bold mb-2">
             NBA Finals
           </p>
+          {isLive && (
+            <div className="inline-flex items-center gap-2 bg-red-600 text-white text-xs uppercase tracking-widest px-3 py-1 rounded-full">
+              <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+              Live
+            </div>
+          )}
+          {isFinal && (
+            <p className="text-zinc-400 text-xs uppercase tracking-widest">Final</p>
+          )}
+          {!isLive && !isFinal && (
+            <p className="text-zinc-400 text-md uppercase tracking-widest">
+              {new Date(game.datetime!).toLocaleDateString("en-US", {
+                weekday: "long",
+                month: "long",
+                day: "numeric",
+              })}
+              {" · "}
+              {new Date(game.datetime!).toLocaleTimeString("en-US", {
+                hour: "2-digit",
+                minute: "2-digit",
+                timeZoneName: "short",
+              })}
+            </p>
+          )}
         </div>
 
         <div className="flex items-center justify-center gap-2 md:gap-4">
