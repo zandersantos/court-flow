@@ -22,7 +22,9 @@ export default async function GameScore() {
   if (!game)
   {
     return (
-      <p className="text-gray-500">No game today.</p>
+      <div className="flex items-center justify-center h-48">
+        <p className="text-zinc-500 text-sm uppercase tracking-widest">No game scheduled for today.</p>
+      </div>
     )
   }
 
