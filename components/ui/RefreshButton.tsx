@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
-export default function TodayRefreshButton() {
+export default function RefreshButton() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
 
@@ -11,7 +11,7 @@ export default function TodayRefreshButton() {
     setLoading(true)
 
     try {
-      await fetch("/api/sync/games/refresh")
+      await fetch("/api/sync/games")
       router.refresh()
     } finally {
       setLoading(false)
