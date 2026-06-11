@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma"
 import Image from "next/image"
-import TodayRefreshButton from "../ui/TodayRefreshButton"
+import RefreshButton from "../ui/RefreshButton"
 
 export default async function GameScore() {
   const now = new Date()
@@ -140,7 +140,7 @@ export default async function GameScore() {
           }
         </p>
         <div className = "flex flex-col items-center">
-          <TodayRefreshButton />
+          <RefreshButton />
           <a href="/playoffs" className="mt-8 inline-flex px-5 py-2 border border-yellow-400/40 bg-black/30 text-yellow-400 text-lg rounded-full duration-200 hover:bg-yellow-400/10 hover:border-yellow-400 disabled:cursor-not-allowed">
             View All Playoff Games
           </a>
