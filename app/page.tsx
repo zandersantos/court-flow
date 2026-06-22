@@ -1,9 +1,9 @@
-import GameScore from "@/components/gamescore/GameScore";
+import HomePage from "@/components/homepage/HomePage";
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center gap-8 p-8">
-      <GameScore />
+    <main className="min-h-screen flex flex-col items-center justify-center">
+      <HomePage />
     </main>
   );
 }
