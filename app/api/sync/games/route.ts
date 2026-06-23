@@ -2,18 +2,33 @@ import { NextResponse } from "next/server"
 import { fetcher } from "@/lib/balldontlie"
 import prisma from "@/lib/prisma"
 
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms))
+
 export async function GET() {
   try {
-    let cursor: number | undefined
+    let cursor: number | undefined = undefined
     let hasMore = true
     let totalSynced = 0
 
     while (hasMore) {
-      const url = `/games?seasons[]=2025&postseason=true&per_page=100${
+      const url = `/games?seasons[]=2025&per_page=100${
         cursor ? `&cursor=${cursor}` : ""
       }`
 
-      const data = await fetcher(url)
+      let data
+
+      try {
+        data = await fetcher(url)
+      } catch (err) {
+        const message = err instanceof Error ? err.message : ""
+
+        if (message.includes("429")) {
+          await sleep(1500)
+          continue
+        }
+
+        throw err
+      }
 
       for (const game of data.data) {
         const gameData = {
@@ -65,13 +80,21 @@ export async function GET() {
         totalSynced++
       }
 
-      cursor = data.meta?.next_cursor ?? undefined
-      hasMore = Boolean(data.meta?.next_cursor)
+      const next = data.meta?.next_cursor
+
+      if (!next || next === cursor) {
+        hasMore = false
+      } else {
+        cursor = next
+      }
+
+      await sleep(400)
     }
 
     return NextResponse.json({ success: true, count: totalSynced })
   } catch (error) {
     console.error("Games Syncing Error:", error)
+
     return NextResponse.json(
       { error: "Games Syncing failed" },
       { status: 500 }
