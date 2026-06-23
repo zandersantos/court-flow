@@ -4,7 +4,7 @@ import RefreshButton from "../ui/RefreshButton"
 const games = await prisma.game.findMany({
     where: {
       season:{
-        in: [2024, 2025]
+        in: [2025]
       }
     },
     orderBy: {
