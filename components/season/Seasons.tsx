@@ -76,7 +76,29 @@ export default function Seasons({ games }: SeasonsProps) {
         <div>
           {paginated.map((game) => (
             <div key ={game.id}>
-              {game.homeTeam.fullName} {game.homeTeamScore} - {game.visitorTeamScore} {game.visitorTeam.fullName}
+              <span>
+                {new Date(game.date).toLocaleDateString("en-US", {
+                  weekday: "short",
+                  month: "short",
+                  day: "numeric"
+                })}
+              </span>
+              <div>
+                <span>
+                  {game.homeTeam.fullName}
+                </span>
+                <span>
+                  {game.homeTeamScore ?? "-"}
+                </span>
+              </div>
+              <div>
+                <span>
+                  {game.visitorTeam.fullName}
+                </span>
+                <span>
+                  {game.visitorTeamScore ?? "-"}
+                </span>
+              </div>
             </div>
           ))}
         </div>
