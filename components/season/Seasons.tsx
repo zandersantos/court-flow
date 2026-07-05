@@ -1,5 +1,7 @@
 "use client"
 
+import { useState} from "react"
+
 type Team = {
   id: number
   fullName: string
@@ -26,9 +28,11 @@ const months = [
 
 const gameTypes = ["All", "Regular Season", "Playoffs"]
 
-import { useState} from "react"
+interface SeasonsProps {
+  games: Game[]
+}
 
-export default function Seasons() {
+export default function Seasons({ games }: SeasonsProps) {
   const [selectedMonth, setSelectedMonth] = useState("All")
   const [selectedType, setSelectedType] = useState("All")
   const [page, setPage] = useState(1)
