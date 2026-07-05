@@ -1,6 +1,6 @@
 "use client"
 
-import { useState} from "react"
+import { useState, useMemo } from "react"
 
 type Team = {
   id: number
@@ -16,7 +16,7 @@ type Game = {
   homeTeamScore: number | null
   visitorTeamScore: number | null
   homeTeam: Team
-  visitor: Team
+  visitorTeam: Team
   winnerName: string | null
 }
 
@@ -37,6 +37,31 @@ export default function Seasons({ games }: SeasonsProps) {
   const [selectedType, setSelectedType] = useState("All")
   const [page, setPage] = useState(1)
 
+  const filtered = useMemo(() => {
+    return games.filter((game) => {
+      const month = new Date(game.date).toLocaleDateString("en-US", { month: "short" })
+      const matchesMonth = selectedMonth === "All" || month === selectedMonth
+      const matchesType =
+        selectedType === "All" ||
+        (selectedType === "Playoffs" && game.postseason) ||
+        (selectedType === "Regular Season" && !game.postseason)
+      return matchesMonth && matchesType
+    })
+  }, [games, selectedMonth, selectedType])
+
+  const totalPages = (filtered.length + gamesPerPage - 1) / gamesPerPage | 0
+  const paginated = filtered.slice((page - 1) * gamesPerPage, page * gamesPerPage)
+
+  const handleFilter = (type: "month" | "gameType", value: string) => {
+    setPage(1)
+    if (type === "month") {
+      setSelectedMonth(value)
+    }
+    else {
+      setSelectedType(value)
+    }
+  }
+
   return (
     <div className="px-8 py-12 bg-black text-white">
       <div className="mb-10">
@@ -48,43 +73,13 @@ export default function Seasons({ games }: SeasonsProps) {
         2025-26 NBA Season
       </h1>
       <div className="flex flex-col gap-4">
-        {gamesWithResult.map((game) => (
-          <div key={game.id} className="bg-gray-800 border p-4 rounded-lg">
-            <div className="text-sm text-gray-300 font-bold uppercase tracking-widest mb-4">
-              {new Date(game.date).toLocaleDateString(
-                "en-US",
-                {
-                  weekday: "short",
-                  month: "short",
-                  day: "numeric"
-                }
-              )}
+        <div>
+          {paginated.map((game) => (
+            <div key ={game.id}>
+              {game.homeTeam.fullName} {game.homeTeamScore} - {game.visitorTeamScore} {game.visitorTeam.fullName}
             </div>
-
-            <div className="flex items-center justify-between">
-              <span className={`text-lg font-semibold ${game.winnerName === game.homeTeam.fullName ? "text-yellow-400" : "text-white"}`}>
-                {game.homeTeam.fullName}
-              </span>
-              <span className={`text-2xl font-semibold ${game.winnerName === game.homeTeam.fullName ? "text-yellow-400" : "text-white"}`}>
-                {game.homeTeamScore ?? "-"}
-              </span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className={`text-lg font-semibold ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-400" : "text-white"}`}>
-                {game.visitorTeam.fullName}
-              </span>
-              <span className={`text-2xl font-semibold ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-400" : "text-white"}`}>
-                {game.visitorTeamScore ?? "-"}
-              </span>
-            </div>
-            {game.homeTeamScore !== null &&
-              game.visitorTeamScore !== null && (
-              <div className="text-xs font-bold text-yellow-400 mt-3 mb-2 uppercase tracking-widest">
-                Winner {game.winnerName}
-              </div>
-            )}
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   )
