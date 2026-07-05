@@ -1,5 +1,31 @@
 "use client"
 
+type Team = {
+  id: number
+  fullName: string
+  abbreviation: string
+}
+
+type Game = {
+  id: number
+  date: Date
+  status: string | null
+  postseason: boolean
+  homeTeamScore: number | null
+  visitorTeamScore: number | null
+  homeTeam: Team
+  visitor: Team
+  winnerName: string | null
+}
+
+const gamesPerPage = 20
+
+const months = [
+  "All", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun"
+]
+
+const gameTypes = ["All", "Regular Season", "Playoffs"]
+
 import { useState} from "react"
 
 export default function Seasons() {
