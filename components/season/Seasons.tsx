@@ -63,7 +63,7 @@ export default function Seasons({ games }: SeasonsProps) {
   }
 
   return (
-    <div className="px-8 py-12 bg-black text-white">
+    <div className="px-8 py-12 bg-white text-black">
       <div className="mb-10">
         <p className="text-2xl text-yellow-400 uppercase tracking-[0.3em] mb-2">
           CourtFlow
@@ -72,36 +72,36 @@ export default function Seasons({ games }: SeasonsProps) {
       <h1 className="text-2xl font-bold uppercase tracking-widest mb-6">
         2025-26 NBA Season
       </h1>
-      <div className="flex flex-col gap-4">
-        <div>
-          {paginated.map((game) => (
-            <div key ={game.id}>
-              <span>
+      <div className="flex flex-col gap-2">
+        {paginated.map((game) => (
+          <div key ={game.id} className="border border-zinc-200 rounded-xl px-5 py-4 hover:border-zinc-400 transition-all duration-150">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs text-zinc-400 uppercase tracking-widest font-medium">
                 {new Date(game.date).toLocaleDateString("en-US", {
                   weekday: "short",
                   month: "short",
                   day: "numeric"
                 })}
               </span>
-              <div>
-                <span>
-                  {game.homeTeam.fullName}
-                </span>
-                <span>
-                  {game.homeTeamScore ?? "-"}
-                </span>
-              </div>
-              <div>
-                <span>
-                  {game.visitorTeam.fullName}
-                </span>
-                <span>
-                  {game.visitorTeamScore ?? "-"}
-                </span>
-              </div>
             </div>
-          ))}
-        </div>
+            <div className="flex items-center justify-between mb-1.5">
+              <span className={`text-base font-semibold ${game.winnerName === game.homeTeam.fullName ? "text-black" : "text-zinc-400"}`}>
+                {game.homeTeam.fullName}
+              </span>
+              <span className={`text-xl font-black ${game.winnerName === game.homeTeam.fullName ? "text-black" : "text-zinc-400"}`}>
+                {game.homeTeamScore ?? "-"}
+              </span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className={`text-base font-semibold ${game.winnerName === game.visitorTeam.fullName ? "text-black" : "text-zinc-400"}`}>
+                {game.visitorTeam.fullName}
+              </span>
+              <span className={`text-xl font-black ${game.winnerName === game.visitorTeam.fullName ? "text-black" : "text-zinc-400"}`}>
+                {game.visitorTeamScore ?? "-"}
+              </span>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   )
