@@ -1,38 +1,20 @@
-import prisma from "@/lib/prisma"
-import RefreshButton from "../ui/RefreshButton"
+"use client"
 
-const games = await prisma.game.findMany({
-  where: {
-    season:{
-      in: [2025]
-    }
-  },
-  orderBy: {
-    date: "asc"
-  },
-  include: {
-    homeTeam: true,
-    visitorTeam: true,
-  },
-})
+import { useState} from "react"
 
-const gamesWithResult = games.map((game) => {
-  let winnerName: string | null = null;
+export default function Seasons() {
+  const [selectedMonth, setSelectedMonth] = useState("All")
+  const [selectedType, setSelectedType] = useState("All")
+  const [page, setPage] = useState(1)
 
-  if(game.homeTeamScore !== null && game.visitorTeamScore !== null){
-    winnerName = game.homeTeamScore > game.visitorTeamScore
-      ? game.homeTeam.fullName : game.visitorTeam.fullName
-  }
-  return {
-    ...game,
-    winnerName,
-  }
-})
-
-const Seasons = () => {
   return (
     <div className="px-8 py-12 bg-black text-white">
-      <h1 className="text-2xl font-bold mb-6">
+      <div className="mb-10">
+        <p className="text-2xl text-yellow-400 uppercase tracking-[0.3em] mb-2">
+          CourtFlow
+        </p>
+      </div>
+      <h1 className="text-2xl font-bold uppercase tracking-widest mb-6">
         2025-26 NBA Season
       </h1>
       <div className="flex flex-col gap-4">
@@ -77,5 +59,3 @@ const Seasons = () => {
     </div>
   )
 }
-
-export default Seasons;
