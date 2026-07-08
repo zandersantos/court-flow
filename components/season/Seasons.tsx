@@ -89,6 +89,23 @@ export default function Seasons({ games }: SeasonsProps) {
         </div>
       </div>
 
+      <div className="flex gap-2 flex-wrap pb-8">
+        {months.map((month) => (
+          <button
+            key={month}
+            onClick={() => handleFilter("month", month)}
+            className={`px-4 py-1 rounded-full text-sm font-semibold border transition-all duration-150
+              ${
+                selectedMonth === month
+                ? "bg-black text-white border-black"
+                : "bg-white text-black border-gray-300 hover:border-black"
+              }`}
+            >
+              {month}
+            </button>
+        ))}
+      </div>
+
       <h1 className="text-2xl font-bold uppercase tracking-tight text-black mb-2">
         2025-26 NBA Season
       </h1>
