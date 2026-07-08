@@ -64,7 +64,7 @@ export default function Seasons({ games }: SeasonsProps) {
 
   return (
     <div className="px-8 py-12 bg-white text-black">
-      <div className="max-w-3xl mx-auto">
+      <div>
         <p className="text-2xl text-yellow-500 uppercase tracking-widest mb-8 font-bold">
           CourtFlow
         </p>
