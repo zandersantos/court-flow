@@ -1,75 +1,170 @@
-import prisma from "@/lib/prisma"
-import RefreshButton from "../ui/RefreshButton"
+"use client"
 
-const games = await prisma.game.findMany({
-    where: {
-      season:{
-        in: [2025]
-      }
-    },
-    orderBy: {
-      date: "asc"
-    },
-    include: {
-      homeTeam: true,
-      visitorTeam: true,
-    },
-  })
+import { useState, useMemo } from "react"
 
-  const gamesWithResult = games.map((game) => {
-    let winnerName: string | null = null;
+type Team = {
+  id: number
+  fullName: string
+  abbreviation: string
+}
 
-    if(game.homeTeamScore !== null && game.visitorTeamScore !== null){
-      winnerName = game.homeTeamScore > game.visitorTeamScore
-        ? game.homeTeam.fullName : game.visitorTeam.fullName
+type Game = {
+  id: number
+  date: Date
+  status: string | null
+  postseason: boolean
+  homeTeamScore: number | null
+  visitorTeamScore: number | null
+  homeTeam: Team
+  visitorTeam: Team
+  winnerName: string | null
+}
+
+const gamesPerPage = 20
+
+const months = [
+  "All", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun"
+]
+
+const gameTypes = ["All", "Regular Season", "Playoffs"]
+
+interface SeasonsProps {
+  games: Game[]
+}
+
+export default function Seasons({ games }: SeasonsProps) {
+  const [selectedMonth, setSelectedMonth] = useState("All")
+  const [selectedType, setSelectedType] = useState("All")
+  const [page, setPage] = useState(1)
+
+  const filtered = useMemo(() => {
+    return games.filter((game) => {
+      const month = new Date(game.date).toLocaleDateString("en-US", { month: "short" })
+      const matchesMonth = selectedMonth === "All" || month === selectedMonth
+      const matchesType =
+        selectedType === "All" ||
+        (selectedType === "Playoffs" && game.postseason) ||
+        (selectedType === "Regular Season" && !game.postseason)
+      return matchesMonth && matchesType
+    })
+  }, [games, selectedMonth, selectedType])
+
+  const totalPages = (filtered.length + gamesPerPage - 1) / gamesPerPage | 0
+  const paginated = filtered.slice((page - 1) * gamesPerPage, page * gamesPerPage)
+
+  const handleFilter = (type: "month" | "gameType", value: string) => {
+    setPage(1)
+    if (type === "month") {
+      setSelectedMonth(value)
     }
-    return {
-      ...game,
-      winnerName,
+    else {
+      setSelectedType(value)
     }
-  })
+  }
 
-const Seasons = () => {
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-6">
+    <div className="px-8 py-12 bg-white text-black">
+      <div>
+        <p className="text-2xl text-yellow-500 uppercase tracking-widest mb-8 font-bold">
+          CourtFlow
+        </p>
+      </div>
+
+      <div className="flex flex-col gap-2 mb-8">
+        <div className="flex gap-2 flex-wrap">
+          {gameTypes.map((type) => (
+            <button
+              key={type}
+              onClick={() => handleFilter("gameType", type)}
+              className={`px-4 py-1 rounded-full text-sm font-semibold border transition-all duration-150
+                ${
+                  selectedType === type
+                  ? "bg-black text-white border-black"
+                  : "bg-white text-black border-gray-300 hover:border-black"
+                }`}
+            >
+              {type}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex gap-2 flex-wrap pb-8">
+        {months.map((month) => (
+          <button
+            key={month}
+            onClick={() => handleFilter("month", month)}
+            className={`px-4 py-1 rounded-full text-sm font-semibold border transition-all duration-150
+              ${
+                selectedMonth === month
+                ? "bg-black text-white border-black"
+                : "bg-white text-black border-gray-300 hover:border-black"
+              }`}
+            >
+              {month}
+            </button>
+        ))}
+      </div>
+
+      <p className="text-xs text-gray-400 uppercase tracking-widest mb-4">
+        {filtered.length} Total Games
+      </p>
+
+      <h1 className="text-2xl font-bold uppercase tracking-tight text-black mb-2">
         2025-26 NBA Season
       </h1>
-      <RefreshButton />
-      <div className="flex flex-col gap-4">
-        {gamesWithResult.map((game) => (
-          <div key={game.id} className="border p-4 rounded-lg">
-            <div className="text-sm text-gray-500 mb-1">
-              {new Date(game.date).toLocaleDateString()}
+      <div className="flex flex-col gap-2">
+        {paginated.map((game) => (
+          <div key ={game.id} className="border border-gray-200 rounded-xl px-5 py-4 hover:border-gray-400 transition-all duration-150">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs text-gray-400 uppercase tracking-widest font-medium">
+                {new Date(game.date).toLocaleDateString("en-US", {
+                  weekday: "short",
+                  month: "short",
+                  day: "numeric"
+                })}
+              </span>
             </div>
-
-            <div className="flex items-center justify-between">
-              <span className="font-medium">
+            <div className="flex items-center justify-between mb-1.5">
+              <span className={`text-base font-semibold ${game.winnerName === game.homeTeam.fullName ? "text-yellow-500" : "text-black"}`}>
                 {game.homeTeam.fullName}
               </span>
-              <span className="text-xl font-bold">
+              <span className={`text-xl font-black ${game.winnerName === game.homeTeam.fullName ? "text-yellow-500" : "text-black"}`}>
                 {game.homeTeamScore ?? "-"}
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="font-medium">
+              <span className={`text-base font-semibold ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-500" : "text-black"}`}>
                 {game.visitorTeam.fullName}
               </span>
-              <span className="text-xl font-bold">
+              <span className={`text-xl font-black ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-500" : "text-black"}`}>
                 {game.visitorTeamScore ?? "-"}
               </span>
             </div>
-            {game.homeTeamScore !== null &&
-              game.visitorTeamScore !== null &&(
-              <div className="text-sm font-bold text-green-600 mb-2">
-                Winner {game.winnerName}
-              </div>
-            )}
           </div>
         ))}
       </div>
+      {totalPages > 1 && (
+        <div className="flex items-center justify-center gap-3 mt-10">
+          <button
+            onClick={() => setPage((p) => Math.max(1, p-1))}
+            disabled={page===1}
+            className="px-4 py-2 text-md font=semibold border boder-gray-300 rounded-full hover:border-black disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+          >
+            - Previous
+          </button>
+          <span className="text-md text-gray-400">
+            Page {page} of {totalPages}
+          </span>
+          <button
+            onClick={() => setPage((p) => Math.min(totalPages, p+1))}
+            disabled={page === totalPages}
+            className="px-4 py-2 text-md font=semibold border boder-gray-300 rounded-full hover:border-black disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+          >
+            Next -
+          </button>
+        </div>
+      )}
     </div>
   )
 }
-
-export default Seasons;
