@@ -106,6 +106,10 @@ export default function Seasons({ games }: SeasonsProps) {
         ))}
       </div>
 
+      <p className="text-xs text-gray-400 uppercase tracking-widest mb-4">
+        {filtered.length} Total Games
+      </p>
+
       <h1 className="text-2xl font-bold uppercase tracking-tight text-black mb-2">
         2025-26 NBA Season
       </h1>
