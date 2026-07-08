@@ -69,6 +69,26 @@ export default function Seasons({ games }: SeasonsProps) {
           CourtFlow
         </p>
       </div>
+
+      <div className="flex flex-col gap-2 mb-8">
+        <div className="flex gap-2 flex-wrap">
+          {gameTypes.map((type) => (
+            <button
+              key={type}
+              onClick={() => handleFilter("gameType", type)}
+              className={`px-4 py-1 rounded-full text-sm font-semibold border transition-all duration-150
+                ${
+                  selectedType === type
+                  ? "bg-black text-white border-black"
+                  : "bg-white text-black border-gray-300 hover:border-black"
+                }`}
+            >
+              {type}
+            </button>
+          ))}
+        </div>
+      </div>
+
       <h1 className="text-2xl font-bold uppercase tracking-tight text-black mb-2">
         2025-26 NBA Season
       </h1>
