@@ -144,6 +144,27 @@ export default function Seasons({ games }: SeasonsProps) {
           </div>
         ))}
       </div>
+      {totalPages > 1 && (
+        <div className="flex items-center justify-center gap-3 mt-10">
+          <button
+            onClick={() => setPage((p) => Math.max(1, p-1))}
+            disabled={page===1}
+            className="px-4 py-2 text-md font=semibold border boder-gray-300 rounded-full hover:border-black disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+          >
+            - Previous
+          </button>
+          <span className="text-md text-gray-400">
+            Page {page} of {totalPages}
+          </span>
+          <button
+            onClick={() => setPage((p) => Math.min(totalPages, p+1))}
+            disabled={page === totalPages}
+            className="px-4 py-2 text-md font=semibold border boder-gray-300 rounded-full hover:border-black disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+          >
+            Next -
+          </button>
+        </div>
+      )}
     </div>
   )
 }
