@@ -65,7 +65,7 @@ export default function Seasons({ games }: SeasonsProps) {
 
   return (
     <div className="min-h-screen px-8 py-12 bg-white text-black">
-      <div className="relative overflow-hidden rounded-3xl bg-black text-white px-10 py-12 mb-10 shadow-xl inset-0 bg-gradient-to-br from-yellow-400/30 via-transparent to-transparent">
+      <div className="relative overflow-hidden rounded-3xl bg-black text-white px-10 py-12 mb-10 shadow-xl bg-gradient-to-br from-yellow-400/30 via-transparent to-transparent">
         <div className="relative flex items-start justify-between">
           <p className="text-4xl text-yellow-500 uppercase tracking-widest font-bold">
             CourtFlow
@@ -79,19 +79,22 @@ export default function Seasons({ games }: SeasonsProps) {
           </Link>
         </div>
 
-        <h1 className="text-xl font-black uppercase mt-4 tracking-widest">
+        <h1 className="text-2xl font-black uppercase mt-4 tracking-widest">
           2025-2026 NBA Season
         </h1>
 
       </div>
 
-      <div className="flex flex-col gap-2 mb-8">
+      <div className="rounded-3xl p-6 mb-10 bg-gray-50 border border-gray-200 shadow-sm">
+        <p className="text-md uppercase tracking-widest font-semibold text-black mb-4">
+          Game Type
+        </p>
         <div className="flex gap-2 flex-wrap">
           {gameTypes.map((type) => (
             <button
               key={type}
               onClick={() => handleFilter("gameType", type)}
-              className={`px-4 py-1 rounded-full text-sm font-semibold border transition-all duration-150
+              className={`px-4 py-1 rounded-full font-semibold border transition
                 ${
                   selectedType === type
                   ? "bg-black text-white border-black"
@@ -104,55 +107,62 @@ export default function Seasons({ games }: SeasonsProps) {
         </div>
       </div>
 
-      <div className="flex gap-2 flex-wrap pb-8">
-        {months.map((month) => (
-          <button
-            key={month}
-            onClick={() => handleFilter("month", month)}
-            className={`px-4 py-1 rounded-full text-sm font-semibold border transition-all duration-150
-              ${
-                selectedMonth === month
-                ? "bg-black text-white border-black"
-                : "bg-white text-black border-gray-300 hover:border-black"
-              }`}
-            >
-              {month}
-            </button>
-        ))}
+      <div className="rounded-3xl p-6 mb-10 bg-gray-50 border border-gray-200 shadow-sm">
+        <p className="text-md uppercase tracking-widest font-semibold text-black mb-4">
+          Month
+        </p>
+        <div className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 gap-3">
+          {months.map((month) => (
+            <button
+              key={month}
+              onClick={() => handleFilter("month", month)}
+              className={`px-4 py-1 rounded-full font-semibold border transition
+                ${
+                  selectedMonth === month
+                  ? "bg-black text-white border-black"
+                  : "bg-white text-black border-gray-300 hover:border-black"
+                }`}
+              >
+                {month}
+              </button>
+          ))}
+        </div>
       </div>
 
-      <p className="text-xs text-gray-400 uppercase tracking-widest mb-4">
+      <p className="text-md text-gray-600 uppercase tracking-widest mb-2">
         {filtered.length} Total Games
       </p>
 
-      <h1 className="text-2xl font-bold uppercase tracking-tight text-black mb-2">
-        2025-26 NBA Season
-      </h1>
       <div className="flex flex-col gap-2">
         {paginated.map((game) => (
-          <div key ={game.id} className="border border-gray-200 rounded-xl px-5 py-4 hover:border-gray-400 transition-all duration-150">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-xs text-gray-400 uppercase tracking-widest font-medium">
+          <div key ={game.id} className="bg-black text-white rounded-3xl px-8 py-7 bg-gradient-to-br from-yellow-400/30 via-transparent to-transparent">
+            <div className="flex items-center justify-between mb-8">
+              <span className="text-lg text-white uppercase font-semibold tracking-widest">
                 {new Date(game.date).toLocaleDateString("en-US", {
                   weekday: "short",
                   month: "short",
                   day: "numeric"
                 })}
               </span>
+
+              <span className="bg-yellow-400 text-black px-4 py-1 rounded-full text-md font-black">
+                FINAL
+              </span>
             </div>
-            <div className="flex items-center justify-between mb-1.5">
-              <span className={`text-base font-semibold ${game.winnerName === game.homeTeam.fullName ? "text-yellow-500" : "text-black"}`}>
+
+            <div className="flex items-center justify-between mb-4">
+              <span className={`text-3xl font-semibold ${game.winnerName === game.homeTeam.fullName ? "text-yellow-500" : "text-white"}`}>
                 {game.homeTeam.fullName}
               </span>
-              <span className={`text-xl font-black ${game.winnerName === game.homeTeam.fullName ? "text-yellow-500" : "text-black"}`}>
+              <span className={`text-3xl font-semibold bg-white rounded-xl px-5 py-2 ${game.winnerName === game.homeTeam.fullName ? "text-yellow-500" : "text-black"}`}>
                 {game.homeTeamScore ?? "-"}
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className={`text-base font-semibold ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-500" : "text-black"}`}>
+              <span className={`text-3xl font-semibold ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-500" : "text-white"}`}>
                 {game.visitorTeam.fullName}
               </span>
-              <span className={`text-xl font-black ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-500" : "text-black"}`}>
+              <span className={`text-3xl font-semibold bg-white rounded-xl px-5 py-2 ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-500" : "text-black"}`}>
                 {game.visitorTeamScore ?? "-"}
               </span>
             </div>
