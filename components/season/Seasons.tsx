@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { useState, useMemo } from "react"
 
 type Team = {
@@ -64,10 +65,16 @@ export default function Seasons({ games }: SeasonsProps) {
 
   return (
     <div className="px-8 py-12 bg-white text-black">
-      <div>
-        <p className="text-2xl text-yellow-500 uppercase tracking-widest mb-8 font-bold">
+      <div className="flex items-center justify-between mb-4">
+        <p className="text-4xl text-yellow-500 uppercase tracking-widest mb-8 font-bold">
           CourtFlow
         </p>
+        <Link
+          href="/"
+          className="inline-flex items-cdenter gap-2 px-8 py-3 border border-black bg-yellow-400 text-black text-sm rounded-full transition-all duration-200 hover:bg-yellow-400/10 hover:border-yellow-400 hover:text-yellow-400"
+        >
+          Home
+        </Link>
       </div>
 
       <div className="flex flex-col gap-2 mb-8">
