@@ -136,51 +136,59 @@ export default function Seasons({ games }: SeasonsProps) {
       </p>
 
       <div className="flex flex-col gap-5">
-        {paginated.map((game) => (
-          <div key ={game.id} className="bg-gradient-to-br from-yellow-400/50 via-black to-black text-white rounded-3xl px-8 py-7 shadow-xl hover:-translate-y-1 hover:shadow-2xl transition-all shadow-xl">
-            <div className="flex items-center justify-between mb-8">
-              <span className="text-lg text-white uppercase font-semibold tracking-widest">
-                {new Date(game.date).toLocaleDateString("en-US", {
-                  weekday: "short",
-                  month: "short",
-                  day: "numeric"
-                })}
-              </span>
-
-              <span className="bg-yellow-400 text-black px-4 py-1 rounded-full text-base font-black">
-                FINAL
-              </span>
-            </div>
-
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <span className={`text-xl font-semibold ${game.winnerName === game.homeTeam.fullName ? "text-yellow-400" : "text-white"}`}>
-                  {game.homeTeam.abbreviation}
-                </span>
-                <span className={`text-3xl font-semibold ${game.winnerName === game.homeTeam.fullName ? "text-yellow-400" : "text-white"}`}>
-                  {game.homeTeam.fullName}
-                </span>
-              </div>
-              <span className={`text-3xl font-semibold bg-white rounded-xl px-5 py-2 ${game.winnerName === game.homeTeam.fullName ? "text-yellow-400" : "text-black"}`}>
-                {game.homeTeamScore ?? "-"}
-              </span>
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <span className={`text-xl font-semibold ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-400" : "text-white"}`}>
-                  {game.visitorTeam.abbreviation}
-                </span>
-                <span className={`text-3xl font-semibold ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-400" : "text-white"}`}>
-                  {game.visitorTeam.fullName}
-                </span>
-              </div>
-
-              <span className={`text-3xl font-semibold bg-white rounded-xl px-5 py-2 ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-400" : "text-black"}`}>
-                {game.visitorTeamScore ?? "-"}
-              </span>
-            </div>
+        {paginated.length === 0 ? (
+          <div className="bg-gray-100 rounded-3xl p-10 text-center">
+            <p className="text-black uppercase tracking-widest">
+              No Games Found
+            </p>
           </div>
-        ))}
+        ) : (
+          paginated.map((game) => (
+            <div key ={game.id} className="bg-gradient-to-br from-yellow-400/50 via-black to-black text-white rounded-3xl px-8 py-7 shadow-xl hover:-translate-y-1 hover:shadow-2xl transition-all">
+              <div className="flex items-center justify-between mb-8">
+                <span className="text-lg text-white uppercase font-semibold tracking-widest">
+                  {new Date(game.date).toLocaleDateString("en-US", {
+                    weekday: "short",
+                    month: "short",
+                    day: "numeric"
+                  })}
+                </span>
+
+                <span className="bg-yellow-400 text-black px-4 py-1 rounded-full text-base font-black">
+                  FINAL
+                </span>
+              </div>
+
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <span className={`text-xl font-semibold ${game.winnerName === game.homeTeam.fullName ? "text-yellow-400" : "text-white"}`}>
+                    {game.homeTeam.abbreviation}
+                  </span>
+                  <span className={`text-3xl font-semibold ${game.winnerName === game.homeTeam.fullName ? "text-yellow-400" : "text-white"}`}>
+                    {game.homeTeam.fullName}
+                  </span>
+                </div>
+                <span className={`text-3xl font-semibold bg-white rounded-xl px-5 py-2 ${game.winnerName === game.homeTeam.fullName ? "text-yellow-400" : "text-black"}`}>
+                  {game.homeTeamScore ?? "-"}
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <span className={`text-xl font-semibold ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-400" : "text-white"}`}>
+                    {game.visitorTeam.abbreviation}
+                  </span>
+                  <span className={`text-3xl font-semibold ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-400" : "text-white"}`}>
+                    {game.visitorTeam.fullName}
+                  </span>
+                </div>
+
+                <span className={`text-3xl font-semibold bg-white rounded-xl px-5 py-2 ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-400" : "text-black"}`}>
+                  {game.visitorTeamScore ?? "-"}
+                </span>
+              </div>
+            </div>
+          ))
+        )}
       </div>
       {totalPages > 1 && (
         <div className="flex items-center justify-center gap-5 mt-12">
