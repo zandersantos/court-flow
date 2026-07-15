@@ -64,17 +64,25 @@ export default function Seasons({ games }: SeasonsProps) {
   }
 
   return (
-    <div className="px-8 py-12 bg-white text-black">
-      <div className="flex items-center justify-between mb-4">
-        <p className="text-4xl text-yellow-500 uppercase tracking-widest mb-8 font-bold">
-          CourtFlow
-        </p>
-        <Link
-          href="/"
-          className="inline-flex items-cdenter gap-2 px-8 py-3 border border-black bg-yellow-400 text-black text-sm rounded-full transition-all duration-200 hover:bg-yellow-400/10 hover:border-yellow-400 hover:text-yellow-400"
-        >
-          Home
-        </Link>
+    <div className="min-h-screen px-8 py-12 bg-white text-black">
+      <div className="relative overflow-hidden rounded-3xl bg-black text-white px-10 py-12 mb-10 shadow-xl inset-0 bg-gradient-to-br from-yellow-400/30 via-transparent to-transparent">
+        <div className="relative flex items-start justify-between">
+          <p className="text-4xl text-yellow-500 uppercase tracking-widest font-bold">
+            CourtFlow
+          </p>
+
+          <Link
+            href="/"
+            className="inline-flex items-center uppercase tracking-widest gap-2 px-8 py-3 border border-black font-bold bg-yellow-400 text-black text-bold text-md rounded-full transition-all duration-200 hover:bg-yellow-400/10 hover:border-yellow-400 hover:text-yellow-400"
+          >
+            Home
+          </Link>
+        </div>
+
+        <h1 className="text-xl font-black uppercase mt-4 tracking-widest">
+          2025-2026 NBA Season
+        </h1>
+
       </div>
 
       <div className="flex flex-col gap-2 mb-8">
