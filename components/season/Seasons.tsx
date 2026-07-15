@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { useState, useMemo } from "react"
 
 type Team = {
@@ -63,20 +64,38 @@ export default function Seasons({ games }: SeasonsProps) {
   }
 
   return (
-    <div className="px-8 py-12 bg-white text-black">
-      <div>
-        <p className="text-2xl text-yellow-500 uppercase tracking-widest mb-8 font-bold">
-          CourtFlow
-        </p>
+    <div className="min-h-screen px-8 py-12 bg-white text-black">
+      <div className="relative overflow-hidden rounded-3xl text-white px-10 py-12 mb-10 bg-gradient-to-br from-yellow-400/50 via-black to-black hover:shadow-2xl transition-all shadow-xl">
+        <div className="relative flex items-start justify-between">
+          <p className="text-4xl text-yellow-500 uppercase tracking-widest font-bold">
+            CourtFlow
+          </p>
+
+          <Link
+            href="/"
+            className="inline-flex items-center uppercase tracking-widest gap-2 px-8 py-3 border border-black font-bold bg-yellow-400 text-black text-md rounded-full transition-all duration-200 hover:bg-yellow-400/10 hover:border-yellow-400 hover:text-yellow-400"
+          >
+            Home
+          </Link>
+        </div>
+
+        <h1 className="text-2xl font-black uppercase mt-4 tracking-widest">
+          2025-2026 NBA Season
+        </h1>
+
       </div>
 
-      <div className="flex flex-col gap-2 mb-8">
-        <div className="flex gap-2 flex-wrap">
+      <div className="rounded-3xl p-6 mb-10 bg-gray-50 border border-gray-200 shadow-sm">
+        <p className="text-base uppercase tracking-widest font-semibold text-black mb-4">
+          Game Type
+        </p>
+        <div className="flex gap-5 flex-wrap">
           {gameTypes.map((type) => (
             <button
               key={type}
+              type="button"
               onClick={() => handleFilter("gameType", type)}
-              className={`px-4 py-1 rounded-full text-sm font-semibold border transition-all duration-150
+              className={`px-4 py-2 rounded-full font-semibold border transition
                 ${
                   selectedType === type
                   ? "bg-black text-white border-black"
@@ -89,77 +108,106 @@ export default function Seasons({ games }: SeasonsProps) {
         </div>
       </div>
 
-      <div className="flex gap-2 flex-wrap pb-8">
-        {months.map((month) => (
-          <button
-            key={month}
-            onClick={() => handleFilter("month", month)}
-            className={`px-4 py-1 rounded-full text-sm font-semibold border transition-all duration-150
-              ${
-                selectedMonth === month
-                ? "bg-black text-white border-black"
-                : "bg-white text-black border-gray-300 hover:border-black"
-              }`}
-            >
-              {month}
-            </button>
-        ))}
+      <div className="rounded-3xl p-6 mb-10 bg-gray-50 border border-gray-200 shadow-sm">
+        <p className="text-base uppercase tracking-widest font-semibold text-black mb-4">
+          Month
+        </p>
+        <div className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 gap-3">
+          {months.map((month) => (
+            <button
+              key={month}
+              type="button"
+              onClick={() => handleFilter("month", month)}
+              className={`px-4 py-2 rounded-full font-semibold border transition
+                ${
+                  selectedMonth === month
+                  ? "bg-black text-white border-black"
+                  : "bg-white text-black border-gray-300 hover:border-black"
+                }`}
+              >
+                {month}
+              </button>
+          ))}
+        </div>
       </div>
 
-      <p className="text-xs text-gray-400 uppercase tracking-widest mb-4">
+      <p className="text-base text-gray-600 uppercase tracking-widest mb-2">
         {filtered.length} Total Games
       </p>
 
-      <h1 className="text-2xl font-bold uppercase tracking-tight text-black mb-2">
-        2025-26 NBA Season
-      </h1>
-      <div className="flex flex-col gap-2">
-        {paginated.map((game) => (
-          <div key ={game.id} className="border border-gray-200 rounded-xl px-5 py-4 hover:border-gray-400 transition-all duration-150">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-xs text-gray-400 uppercase tracking-widest font-medium">
-                {new Date(game.date).toLocaleDateString("en-US", {
-                  weekday: "short",
-                  month: "short",
-                  day: "numeric"
-                })}
-              </span>
-            </div>
-            <div className="flex items-center justify-between mb-1.5">
-              <span className={`text-base font-semibold ${game.winnerName === game.homeTeam.fullName ? "text-yellow-500" : "text-black"}`}>
-                {game.homeTeam.fullName}
-              </span>
-              <span className={`text-xl font-black ${game.winnerName === game.homeTeam.fullName ? "text-yellow-500" : "text-black"}`}>
-                {game.homeTeamScore ?? "-"}
-              </span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className={`text-base font-semibold ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-500" : "text-black"}`}>
-                {game.visitorTeam.fullName}
-              </span>
-              <span className={`text-xl font-black ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-500" : "text-black"}`}>
-                {game.visitorTeamScore ?? "-"}
-              </span>
-            </div>
+      <div className="flex flex-col gap-5">
+        {paginated.length === 0 ? (
+          <div className="bg-gray-100 rounded-3xl p-10 text-center">
+            <p className="text-black uppercase tracking-widest">
+              No Games Found
+            </p>
           </div>
-        ))}
+        ) : (
+          paginated.map((game) => (
+            <div key ={game.id} className="bg-gradient-to-br from-yellow-400/50 via-black to-black text-white rounded-3xl px-8 py-7 shadow-xl hover:-translate-y-1 hover:shadow-2xl transition-all">
+              <div className="flex items-center justify-between mb-8">
+                <span className="text-lg text-white uppercase font-semibold tracking-widest">
+                  {new Date(game.date).toLocaleDateString("en-US", {
+                    weekday: "short",
+                    month: "short",
+                    day: "numeric"
+                  })}
+                </span>
+
+                <span className="bg-yellow-400 text-black px-4 py-1 rounded-full text-base font-black">
+                  FINAL
+                </span>
+              </div>
+
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <span className={`text-xl font-semibold ${game.winnerName === game.homeTeam.fullName ? "text-yellow-400" : "text-white"}`}>
+                    {game.homeTeam.abbreviation}
+                  </span>
+                  <span className={`text-3xl font-semibold ${game.winnerName === game.homeTeam.fullName ? "text-yellow-400" : "text-white"}`}>
+                    {game.homeTeam.fullName}
+                  </span>
+                </div>
+                <span className={`text-3xl font-semibold bg-white rounded-xl px-5 py-2 ${game.winnerName === game.homeTeam.fullName ? "text-yellow-400" : "text-black"}`}>
+                  {game.homeTeamScore ?? "-"}
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <span className={`text-xl font-semibold ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-400" : "text-white"}`}>
+                    {game.visitorTeam.abbreviation}
+                  </span>
+                  <span className={`text-3xl font-semibold ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-400" : "text-white"}`}>
+                    {game.visitorTeam.fullName}
+                  </span>
+                </div>
+
+                <span className={`text-3xl font-semibold bg-white rounded-xl px-5 py-2 ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-400" : "text-black"}`}>
+                  {game.visitorTeamScore ?? "-"}
+                </span>
+              </div>
+            </div>
+          ))
+        )}
       </div>
       {totalPages > 1 && (
-        <div className="flex items-center justify-center gap-3 mt-10">
+        <div className="flex items-center justify-center gap-5 mt-12">
           <button
+            type="button"
             onClick={() => setPage((p) => Math.max(1, p-1))}
             disabled={page===1}
-            className="px-4 py-2 text-md font=semibold border boder-gray-300 rounded-full hover:border-black disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+            className="px-4 py-2 text-base font-semibold border border-gray-300 rounded-full hover:border-black disabled:opacity-30 disabled:cursor-not-allowed"
           >
             - Previous
           </button>
-          <span className="text-md text-gray-400">
+          <span className="text-base text-gray-400">
             Page {page} of {totalPages}
           </span>
           <button
+            type="button"
             onClick={() => setPage((p) => Math.min(totalPages, p+1))}
             disabled={page === totalPages}
-            className="px-4 py-2 text-md font=semibold border boder-gray-300 rounded-full hover:border-black disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+            className="px-4 py-2 text-base font-semibold border border-gray-300 rounded-full hover:border-black disabled:opacity-30 disabled:cursor-not-allowed"
           >
             Next -
           </button>
