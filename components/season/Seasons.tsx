@@ -65,7 +65,7 @@ export default function Seasons({ games }: SeasonsProps) {
 
   return (
     <div className="min-h-screen px-8 py-12 bg-white text-black">
-      <div className="relative overflow-hidden rounded-3xl text-white px-10 py-12 mb-10 bg-gradient-to-br from-yellow-400/50 via-black to-black text-white rounded-3xl px-8 py-7 shadow-xl hover:-translate-y-1 hover:shadow-2xl transition-all shadow-xl">
+      <div className="relative overflow-hidden rounded-3xl text-white px-10 py-12 mb-10 bg-gradient-to-br from-yellow-400/50 via-black to-black hover:shadow-2xl transition-all shadow-xl">
         <div className="relative flex items-start justify-between">
           <p className="text-4xl text-yellow-500 uppercase tracking-widest font-bold">
             CourtFlow
@@ -135,7 +135,7 @@ export default function Seasons({ games }: SeasonsProps) {
         {filtered.length} Total Games
       </p>
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-5">
         {paginated.map((game) => (
           <div key ={game.id} className="bg-gradient-to-br from-yellow-400/50 via-black to-black text-white rounded-3xl px-8 py-7 shadow-xl hover:-translate-y-1 hover:shadow-2xl transition-all shadow-xl">
             <div className="flex items-center justify-between mb-8">
@@ -154,28 +154,28 @@ export default function Seasons({ games }: SeasonsProps) {
 
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
-                <span className={`text-xl font-semibold ${game.winnerName === game.homeTeam.fullName ? "text-yellow-500" : "text-white"}`}>
+                <span className={`text-xl font-semibold ${game.winnerName === game.homeTeam.fullName ? "text-yellow-400" : "text-white"}`}>
                   {game.homeTeam.abbreviation}
                 </span>
-                <span className={`text-3xl font-semibold ${game.winnerName === game.homeTeam.fullName ? "text-yellow-500" : "text-white"}`}>
+                <span className={`text-3xl font-semibold ${game.winnerName === game.homeTeam.fullName ? "text-yellow-400" : "text-white"}`}>
                   {game.homeTeam.fullName}
                 </span>
               </div>
-              <span className={`text-3xl font-semibold bg-white rounded-xl px-5 py-2 ${game.winnerName === game.homeTeam.fullName ? "text-yellow-500" : "text-black"}`}>
+              <span className={`text-3xl font-semibold bg-white rounded-xl px-5 py-2 ${game.winnerName === game.homeTeam.fullName ? "text-yellow-400" : "text-black"}`}>
                 {game.homeTeamScore ?? "-"}
               </span>
             </div>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <span className={`text-xl font-semibold ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-500" : "text-white"}`}>
+                <span className={`text-xl font-semibold ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-400" : "text-white"}`}>
                   {game.visitorTeam.abbreviation}
                 </span>
-                <span className={`text-3xl font-semibold ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-500" : "text-white"}`}>
+                <span className={`text-3xl font-semibold ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-400" : "text-white"}`}>
                   {game.visitorTeam.fullName}
                 </span>
               </div>
 
-              <span className={`text-3xl font-semibold bg-white rounded-xl px-5 py-2 ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-500" : "text-black"}`}>
+              <span className={`text-3xl font-semibold bg-white rounded-xl px-5 py-2 ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-400" : "text-black"}`}>
                 {game.visitorTeamScore ?? "-"}
               </span>
             </div>
