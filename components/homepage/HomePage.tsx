@@ -24,7 +24,7 @@ export default function HomePage() {
           href="/seasons"
           className="mt-4 inline-flex items-center gap-2 px-8 py-3 border border-black bg-yellow-400 text-black text-lg rounded-full transition-all duration-200 hover:bg-yellow-400/10 hover:border-yellow-400 hover:text-yellow-400"
         >
-          View All Seasons
+          View 2025-2026 Season
         </a>
       </div>
     </div>
