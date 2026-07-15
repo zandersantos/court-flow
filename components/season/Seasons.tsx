@@ -73,7 +73,7 @@ export default function Seasons({ games }: SeasonsProps) {
 
           <Link
             href="/"
-            className="inline-flex items-center uppercase tracking-widest gap-2 px-8 py-3 border border-black font-bold bg-yellow-400 text-black text-bold text-md rounded-full transition-all duration-200 hover:bg-yellow-400/10 hover:border-yellow-400 hover:text-yellow-400"
+            className="inline-flex items-center uppercase tracking-widest gap-2 px-8 py-3 border border-black font-bold bg-yellow-400 text-black font-bold text-md rounded-full transition-all duration-200 hover:bg-yellow-400/10 hover:border-yellow-400 hover:text-yellow-400"
           >
             Home
           </Link>
@@ -151,17 +151,28 @@ export default function Seasons({ games }: SeasonsProps) {
             </div>
 
             <div className="flex items-center justify-between mb-4">
-              <span className={`text-3xl font-semibold ${game.winnerName === game.homeTeam.fullName ? "text-yellow-500" : "text-white"}`}>
-                {game.homeTeam.fullName}
-              </span>
+              <div className="flex items-center gap-3">
+                <span className={`text-3xl font-semibold ${game.winnerName === game.homeTeam.fullName ? "text-yellow-500" : "text-white"}`}>
+                  {game.homeTeam.abbreviation}
+                </span>
+                <span className={`text-3xl font-semibold ${game.winnerName === game.homeTeam.fullName ? "text-yellow-500" : "text-white"}`}>
+                  {game.homeTeam.fullName}
+                </span>
+              </div>
               <span className={`text-3xl font-semibold bg-white rounded-xl px-5 py-2 ${game.winnerName === game.homeTeam.fullName ? "text-yellow-500" : "text-black"}`}>
                 {game.homeTeamScore ?? "-"}
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className={`text-3xl font-semibold ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-500" : "text-white"}`}>
-                {game.visitorTeam.fullName}
-              </span>
+              <div className="flex items-center gap-3">
+                <span className={`text-3xl font-semibold ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-500" : "text-white"}`}>
+                  {game.visitorTeam.abbreviation}
+                </span>
+                <span className={`text-3xl font-semibold ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-500" : "text-white"}`}>
+                  {game.visitorTeam.fullName}
+                </span>
+              </div>
+
               <span className={`text-3xl font-semibold bg-white rounded-xl px-5 py-2 ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-500" : "text-black"}`}>
                 {game.visitorTeamScore ?? "-"}
               </span>
