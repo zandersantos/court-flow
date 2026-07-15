@@ -93,6 +93,7 @@ export default function Seasons({ games }: SeasonsProps) {
           {gameTypes.map((type) => (
             <button
               key={type}
+              type="button"
               onClick={() => handleFilter("gameType", type)}
               className={`px-4 py-2 rounded-full font-semibold border transition
                 ${
@@ -115,6 +116,7 @@ export default function Seasons({ games }: SeasonsProps) {
           {months.map((month) => (
             <button
               key={month}
+              type="button"
               onClick={() => handleFilter("month", month)}
               className={`px-4 py-2 rounded-full font-semibold border transition
                 ${
@@ -183,6 +185,7 @@ export default function Seasons({ games }: SeasonsProps) {
       {totalPages > 1 && (
         <div className="flex items-center justify-center gap-5 mt-12">
           <button
+            type="button"
             onClick={() => setPage((p) => Math.max(1, p-1))}
             disabled={page===1}
             className="px-4 py-2 text-base font-semibold border border-gray-300 rounded-full hover:border-black disabled:opacity-30 disabled:cursor-not-allowed"
@@ -193,6 +196,7 @@ export default function Seasons({ games }: SeasonsProps) {
             Page {page} of {totalPages}
           </span>
           <button
+            type="button"
             onClick={() => setPage((p) => Math.min(totalPages, p+1))}
             disabled={page === totalPages}
             className="px-4 py-2 text-base font-semibold border border-gray-300 rounded-full hover:border-black disabled:opacity-30 disabled:cursor-not-allowed"
