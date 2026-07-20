@@ -75,7 +75,13 @@ export default function Standings({ games }: StandingsProps) {
   )
 
   return (
-    <p>Standings</p>
+    <div>
+      {sortedStandings.map((standing) =>
+        <p key={standing.team.id}>
+          {standing.team.fullName} {standing.wins}-{standing.losses}
+        </p>
+      )}
+    </div>
   )
 
 }
