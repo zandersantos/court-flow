@@ -19,6 +19,12 @@ type Game = {
   visitorTeam: Team
 }
 
+type TeamStanding = {
+  team: Team
+  wins: number
+  losses: number
+}
+
 interface StandingsProps {
   games: Game[]
 }
