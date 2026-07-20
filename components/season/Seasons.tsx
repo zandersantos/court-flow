@@ -67,22 +67,33 @@ export default function Seasons({ games }: SeasonsProps) {
     <div className="min-h-screen px-8 py-12 bg-white text-black">
       <div className="relative overflow-hidden rounded-3xl text-white px-10 py-12 mb-10 bg-gradient-to-br from-yellow-400/50 via-black to-black hover:shadow-2xl transition-all shadow-xl">
         <div className="relative flex items-start justify-between">
-          <p className="text-4xl text-yellow-500 uppercase tracking-widest font-bold">
-            CourtFlow
-          </p>
+          <div>
+            <p className="text-4xl text-yellow-500 uppercase tracking-widest font-bold mb-8">
+              CourtFlow
+            </p>
 
-          <Link
-            href="/"
-            className="inline-flex items-center uppercase tracking-widest gap-2 px-8 py-3 border border-black font-bold bg-yellow-400 text-black text-md rounded-full transition-all duration-200 hover:bg-yellow-400/10 hover:border-yellow-400 hover:text-yellow-400"
-          >
-            Home
-          </Link>
+            <h1 className="text-2xl font-black uppercase mt-4 tracking-widest">
+              2025-2026 NBA Season
+            </h1>
+          </div>
+
+          <div className= "flex flex-col gap-3">
+            <Link
+              href="/"
+              className="inline-flex justify-center items-center uppercase tracking-widest gap-2 px-8 py-3 border border-black font-bold bg-yellow-400 text-black text-md rounded-full transition-all duration-200 hover:bg-yellow-400/10 hover:border-yellow-400 hover:text-yellow-400"
+            >
+              Home
+            </Link>
+
+            <Link
+              href="/standings"
+              className="inline-flex justify-center items-center uppercase tracking-widest gap-2 px-8 py-3 border border-black font-bold bg-yellow-400 text-black text-md rounded-full transition-all duration-200 hover:bg-yellow-400/10 hover:border-yellow-400 hover:text-yellow-400"
+            >
+              Standings
+            </Link>
+          </div>
+
         </div>
-
-        <h1 className="text-2xl font-black uppercase mt-4 tracking-widest">
-          2025-2026 NBA Season
-        </h1>
-
       </div>
 
       <div className="rounded-3xl p-6 mb-10 bg-gray-50 border border-gray-200 shadow-sm">
