@@ -108,7 +108,7 @@ export default function Standings({ games }: StandingsProps) {
         </div>
       </div>
 
-      <div className= "rounded-2xl border border-gray-100 overflowing-hidden">
+      <div className= "rounded-2xl border border-gray-100 overflow-hidden">
         <table className= "w-full text-sm">
           <thead>
             <tr className= "bg-gray-100 border-b border-gray-100">
@@ -129,7 +129,7 @@ export default function Standings({ games }: StandingsProps) {
 
                   <td className="px-5 py-3.5">
                     <div className="flex items-center gap-3">
-                      <span className="text-xs font-bold px-2 py-0.5 rounded bg-gray-100 text-gray-500">
+                      <span className="text-xs font-bold px-2 py-0.5 rounded bg-yellow-400/10 text-yellow-500">
                         {standing.team.abbreviation}
                       </span>
 
