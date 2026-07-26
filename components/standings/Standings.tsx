@@ -108,13 +108,26 @@ export default function Standings({ games }: StandingsProps) {
         </div>
       </div>
 
-      <div>
-        {sortedStandings.map((standing) =>
-          <p key={standing.team.id}>
-            {standing.team.fullName} {standing.wins}-{standing.losses}
-          </p>
-        )}
-        </div>
+      <div className= "rounded-2xl border border-gray-100 overflowing-hidden">
+        <table className= "w-full text-sm">
+          <thead>
+            <tr className= "bg-gray-100 border-b border-gray-100">
+              <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-widest w-8">#</th>
+              <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-widest">Team</th>
+              <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-widest">Conference</th>
+              <th className="text-center px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-widest">W</th>
+              <th className="text-center px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-widest">L</th>
+            </tr>
+          </thead>
+        </table>
+        {sortedStandings.map((standing) => {
+          return (
+            <p key={standing.team.id}>
+              {standing.team.fullName} {standing.wins}-{standing.losses}
+            </p>
+          )
+        })}
+      </div>
     </div>
   )
 
