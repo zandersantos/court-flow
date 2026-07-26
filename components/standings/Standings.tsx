@@ -112,42 +112,42 @@ export default function Standings({ games }: StandingsProps) {
         <table className= "w-full text-sm">
           <thead>
             <tr className= "bg-gray-100 border-b border-gray-100">
-              <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-widest w-8">#</th>
-              <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-widest">Team</th>
-              <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-widest">Conference</th>
-              <th className="text-center px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-widest">W</th>
-              <th className="text-center px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-widest">L</th>
+              <th className="text-left px-5 py-3 text-lg font-semibold text-gray-400 uppercase tracking-widest w-8">#</th>
+              <th className="text-left px-5 py-3 text-lg font-semibold text-gray-400 uppercase tracking-widest">Team</th>
+              <th className="text-left px-5 py-3 text-lg font-semibold text-gray-400 uppercase tracking-widest">Conference</th>
+              <th className="text-center px-5 py-3 text-lg font-semibold text-gray-400 uppercase tracking-widest">W</th>
+              <th className="text-center px-5 py-3 text-lg font-semibold text-gray-400 uppercase tracking-widest">L</th>
             </tr>
           </thead>
           <tbody>
             {sortedStandings.map((standing, index) => {
               return (
                 <tr key={standing.team.id} className= "border-b border-gray-100 last:border-0 hover:bg-gray-100 transition-colors">
-                  <td className= "px-5 py-3.5 text-gray-300 font-medium">
+                  <td className= "px-5 py-3.5 text-gray-400 font-semibold text-lg">
                     {index + 1}
                   </td>
 
                   <td className="px-5 py-3.5">
-                    <div className="flex items-center gap-3">
-                      <span className="text-xs font-bold px-2 py-0.5 rounded bg-yellow-400/10 text-yellow-500">
+                    <div className="flex items-center gap-6">
+                      <span className="text-md font-bold px-2 py-0.5 w-12 text-center rounded bg-yellow-400/10 text-yellow-500">
                         {standing.team.abbreviation}
                       </span>
 
-                      <span className="font-semibold text-black">
+                      <span className="font-semibold text-lg text-black">
                         {standing.team.fullName}
                       </span>
                     </div>
                   </td>
 
-                  <td className="px-5 py-3.5 text-gray-400 font-medium">
+                  <td className="px-5 py-3.5 text-gray-400 text-lg">
                     {standing.team.conference}
                   </td>
 
-                  <td className="px-5 py-3.5 text-center font-black text-black">
+                  <td className="px-5 py-3.5 text-center text-lg font-black text-black">
                     {standing.wins}
                   </td>
 
-                  <td className="px-5 py-3.5 text-center font-semibold text-gray-400">
+                  <td className="px-5 py-3.5 text-center text-lg font-semibold text-gray-400">
                     {standing.losses}
                   </td>
                 </tr>
