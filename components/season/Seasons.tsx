@@ -92,53 +92,55 @@ export default function Seasons({ games }: SeasonsProps) {
               Standings
             </Link>
           </div>
-
         </div>
       </div>
 
-      <div className="rounded-2xl p-6 mb-6 bg-gray-50 border border-gray-100">
-        <p className="text-sm uppercase tracking-widest font-semibold text-black mb-4">
-          Game Type
-        </p>
-        <div className="flex gap-3 flex-wrap">
-          {gameTypes.map((type) => (
-            <button
-              key={type}
-              type="button"
-              onClick={() => handleFilter("gameType", type)}
-              className={`px-4 py-1.5 rounded-full text-sm border transition
-                ${
-                  selectedType === type
-                  ? "bg-black text-white border-black"
-                  : "bg-white text-gray-500 border-gray-200 hover:border-black hover:text-black"
-                }`}
-            >
-              {type}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div className="rounded-2xl p-6 mb-6 bg-gray-50 border border-gray-100">
-        <p className="text-sm uppercase tracking-widest font-semibold text-gray-400 mb-4">
-          Month
-        </p>
-        <div className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-10 gap-2">
-          {months.map((month) => (
-            <button
-              key={month}
-              type="button"
-              onClick={() => handleFilter("month", month)}
-              className={`px-3 py-1.5 rounded-full font-semibold border transition
-                ${
-                  selectedMonth === month
-                  ? "bg-black text-white border-black"
-                  : "bg-white text-gray-500 border-gray-200 hover:border-black hover:text-black"
-                }`}
+      <div className="rounded-2xl p-5 mb-6 bg-gray-50 border border-gray-100 flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-6">
+        <div className="flex items-center gap-3">
+          <span className="text-sm font-bold uppercase tracking-widest text-black">
+            Type
+          </span>
+          <div className="flex items-center gap-2.5 flex-wrap">
+            {gameTypes.map((type) => (
+              <button
+                key={type}
+                type="button"
+                onClick={() => handleFilter("gameType", type)}
+                className={`px-3 py-1 rounded-full text-sm font-semibold border transition
+                  ${
+                    selectedType === type
+                    ? "bg-black text-white border-black"
+                    : "bg-white text-gray-500 border-gray-200 hover:border-black hover:text-black"
+                  }`}
               >
-                {month}
+                {type}
               </button>
-          ))}
+            ))}
+          </div>
+        </div>
+
+        <div className="hidden lg:block w-px self-stretch bg-gray-200"/>
+        <div className="flex items-center gap-3">
+          <span className="text-sm font-bold uppercase tracking-widest text-black">
+            Month
+          </span>
+          <div className="flex items-center gap-2.5 flex-wrap">
+            {months.map((month) => (
+              <button
+                key={month}
+                type="button"
+                onClick={() => handleFilter("month", month)}
+                className={`px-3 py-1 rounded-full text-sm font-semibold border transition
+                  ${
+                    selectedMonth === month
+                    ? "bg-black text-white border-black"
+                    : "bg-white text-gray-500 border-gray-200 hover:border-black hover:text-black"
+                  }`}
+                >
+                  {month}
+                </button>
+            ))}
+          </div>
         </div>
       </div>
 
