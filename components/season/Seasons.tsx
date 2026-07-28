@@ -207,18 +207,18 @@ export default function Seasons({ games }: SeasonsProps) {
             type="button"
             onClick={() => setPage((p) => Math.max(1, p-1))}
             disabled={page===1}
-            className="px-4 py-2 text-base font-semibold border border-gray-300 rounded-full hover:border-black disabled:opacity-30 disabled:cursor-not-allowed"
+            className="px-4 py-2 text-sm font-semibold border border-gray-200 rounded-full hover:border-black disabled:opacity-30 disabled:cursor-not-allowed"
           >
             - Previous
           </button>
-          <span className="text-base text-gray-400">
+          <span className="text-sm text-gray-400">
             Page {page} of {totalPages}
           </span>
           <button
             type="button"
             onClick={() => setPage((p) => Math.min(totalPages, p+1))}
             disabled={page === totalPages}
-            className="px-4 py-2 text-base font-semibold border border-gray-300 rounded-full hover:border-black disabled:opacity-30 disabled:cursor-not-allowed"
+            className="px-4 py-2 text-sm font-semibold border border-gray-200 rounded-full hover:border-black disabled:opacity-30 disabled:cursor-not-allowed"
           >
             Next -
           </button>
