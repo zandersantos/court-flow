@@ -92,72 +92,74 @@ export default function Seasons({ games }: SeasonsProps) {
               Standings
             </Link>
           </div>
-
         </div>
       </div>
 
-      <div className="rounded-3xl p-6 mb-10 bg-gray-50 border border-gray-200 shadow-sm">
-        <p className="text-base uppercase tracking-widest font-semibold text-black mb-4">
-          Game Type
-        </p>
-        <div className="flex gap-5 flex-wrap">
-          {gameTypes.map((type) => (
-            <button
-              key={type}
-              type="button"
-              onClick={() => handleFilter("gameType", type)}
-              className={`px-4 py-2 rounded-full font-semibold border transition
-                ${
-                  selectedType === type
-                  ? "bg-black text-white border-black"
-                  : "bg-white text-black border-gray-300 hover:border-black"
-                }`}
-            >
-              {type}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div className="rounded-3xl p-6 mb-10 bg-gray-50 border border-gray-200 shadow-sm">
-        <p className="text-base uppercase tracking-widest font-semibold text-black mb-4">
-          Month
-        </p>
-        <div className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 gap-3">
-          {months.map((month) => (
-            <button
-              key={month}
-              type="button"
-              onClick={() => handleFilter("month", month)}
-              className={`px-4 py-2 rounded-full font-semibold border transition
-                ${
-                  selectedMonth === month
-                  ? "bg-black text-white border-black"
-                  : "bg-white text-black border-gray-300 hover:border-black"
-                }`}
+      <div className="rounded-2xl p-5 mb-6 bg-gray-50 border border-gray-100 flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-6">
+        <div className="flex items-center gap-3">
+          <span className="text-sm font-bold uppercase tracking-widest text-black">
+            Type
+          </span>
+          <div className="flex items-center gap-2.5 flex-wrap">
+            {gameTypes.map((type) => (
+              <button
+                key={type}
+                type="button"
+                onClick={() => handleFilter("gameType", type)}
+                className={`px-3 py-1 rounded-full text-sm font-semibold border transition
+                  ${
+                    selectedType === type
+                    ? "bg-black text-white border-black"
+                    : "bg-white text-gray-500 border-gray-200 hover:border-black hover:text-black"
+                  }`}
               >
-                {month}
+                {type}
               </button>
-          ))}
+            ))}
+          </div>
+        </div>
+
+        <div className="hidden lg:block w-px self-stretch bg-gray-200"/>
+        <div className="flex items-center gap-3">
+          <span className="text-sm font-bold uppercase tracking-widest text-black">
+            Month
+          </span>
+          <div className="flex items-center gap-2.5 flex-wrap">
+            {months.map((month) => (
+              <button
+                key={month}
+                type="button"
+                onClick={() => handleFilter("month", month)}
+                className={`px-3 py-1 rounded-full text-sm font-semibold border transition
+                  ${
+                    selectedMonth === month
+                    ? "bg-black text-white border-black"
+                    : "bg-white text-gray-500 border-gray-200 hover:border-black hover:text-black"
+                  }`}
+                >
+                  {month}
+                </button>
+            ))}
+          </div>
         </div>
       </div>
 
-      <p className="text-base text-gray-600 uppercase tracking-widest mb-2">
+      <p className="text-sm text-gray-400 uppercase tracking-widest mb-4">
         {filtered.length} Total Games
       </p>
 
-      <div className="flex flex-col gap-5">
+      <div className="grid grid-col-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {paginated.length === 0 ? (
-          <div className="bg-gray-100 rounded-3xl p-10 text-center">
-            <p className="text-black uppercase tracking-widest">
+          <div className="col-span-full bg-gray-50 border border-gray-100 rounded-2xl p-10 text-center">
+            <p className="text-gray-400 uppercase tracking-widest text.sm">
               No Games Found
             </p>
           </div>
         ) : (
           paginated.map((game) => (
-            <div key ={game.id} className="bg-gradient-to-br from-yellow-400/50 via-black to-black text-white rounded-3xl px-8 py-7 shadow-xl hover:-translate-y-1 hover:shadow-2xl transition-all">
-              <div className="flex items-center justify-between mb-8">
-                <span className="text-lg text-white uppercase font-semibold tracking-widest">
+            <div key ={game.id} className="bg-white border border-gray-100 rounded-2xl px-5 py-4 hover:border-gray-300 hover:shadow-sm transition-all">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs text-gray-400 uppercase font-semibold tracking-widest">
                   {new Date(game.date).toLocaleDateString("en-US", {
                     weekday: "short",
                     month: "short",
@@ -165,35 +167,35 @@ export default function Seasons({ games }: SeasonsProps) {
                   })}
                 </span>
 
-                <span className="bg-yellow-400 text-black px-4 py-1 rounded-full text-base font-black">
-                  FINAL
+                <span className="bg-gray-100 text-gray-400 px-2.5 py-0.5 rounded-full text-sm font-black uppercase tracking-widest">
+                  Final
                 </span>
               </div>
 
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between py-1">
                 <div className="flex items-center gap-3">
-                  <span className={`text-xl font-semibold ${game.winnerName === game.homeTeam.fullName ? "text-yellow-400" : "text-white"}`}>
+                  <span className="text-sm font-bold px-2 py-0.5 w-12 text-center rounded bg-yellow-400/10 text-yellow-500">
                     {game.homeTeam.abbreviation}
                   </span>
-                  <span className={`text-3xl font-semibold ${game.winnerName === game.homeTeam.fullName ? "text-yellow-400" : "text-white"}`}>
+                  <span className={`text-sm ${game.winnerName === game.homeTeam.fullName ? "font-bold text-black" : "font-medium text-gray-400"}`}>
                     {game.homeTeam.fullName}
                   </span>
                 </div>
-                <span className={`text-3xl font-semibold bg-white rounded-xl px-5 py-2 ${game.winnerName === game.homeTeam.fullName ? "text-yellow-400" : "text-black"}`}>
+                <span className={`text-lg font-black ${game.winnerName === game.homeTeam.fullName ? "text-black" : "text-gray-300"}`}>
                   {game.homeTeamScore ?? "-"}
                 </span>
               </div>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between py-1">
                 <div className="flex items-center gap-3">
-                  <span className={`text-xl font-semibold ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-400" : "text-white"}`}>
+                  <span className="text-sm font-bold px-2 py-0.5 w-12 text-center rounded bg-yellow-400/10 text-yellow-500">
                     {game.visitorTeam.abbreviation}
                   </span>
-                  <span className={`text-3xl font-semibold ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-400" : "text-white"}`}>
+                  <span className={`text-sm ${game.winnerName === game.homeTeam.fullName ? "font-bold text-black" : "font-medium text-gray-400"}`}>
                     {game.visitorTeam.fullName}
                   </span>
                 </div>
 
-                <span className={`text-3xl font-semibold bg-white rounded-xl px-5 py-2 ${game.winnerName === game.visitorTeam.fullName ? "text-yellow-400" : "text-black"}`}>
+                <span className={`text-lg font-black ${game.winnerName === game.visitorTeam.fullName ? "text-black" : "text-gray-300"}`}>
                   {game.visitorTeamScore ?? "-"}
                 </span>
               </div>
@@ -207,18 +209,18 @@ export default function Seasons({ games }: SeasonsProps) {
             type="button"
             onClick={() => setPage((p) => Math.max(1, p-1))}
             disabled={page===1}
-            className="px-4 py-2 text-base font-semibold border border-gray-300 rounded-full hover:border-black disabled:opacity-30 disabled:cursor-not-allowed"
+            className="px-4 py-2 text-sm font-semibold border border-gray-200 rounded-full hover:border-black disabled:opacity-30 disabled:cursor-not-allowed"
           >
             - Previous
           </button>
-          <span className="text-base text-gray-400">
+          <span className="text-sm text-gray-400">
             Page {page} of {totalPages}
           </span>
           <button
             type="button"
             onClick={() => setPage((p) => Math.min(totalPages, p+1))}
             disabled={page === totalPages}
-            className="px-4 py-2 text-base font-semibold border border-gray-300 rounded-full hover:border-black disabled:opacity-30 disabled:cursor-not-allowed"
+            className="px-4 py-2 text-sm font-semibold border border-gray-200 rounded-full hover:border-black disabled:opacity-30 disabled:cursor-not-allowed"
           >
             Next -
           </button>
